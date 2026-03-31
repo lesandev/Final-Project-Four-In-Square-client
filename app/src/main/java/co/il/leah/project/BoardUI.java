@@ -66,9 +66,9 @@ public class BoardUI {
                 int value = board.squares[square][slot];
 
                 if (value == 1) {
-                    cell.setBackgroundColor(Color.RED);
-                } else if (value == 2) {
                     cell.setBackgroundColor(Color.BLUE);
+                } else if (value == 2) {
+                    cell.setBackgroundColor(Color.RED);
                 } else {
                     cell.setBackgroundColor(Color.LTGRAY);
                 }
