@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
             sendToServer();
         });
 
+        boardUI.updateUI(); // הצגת החור השחור בהתחלה
+
         sendToServer(); // מחשב מתחיל
     }
 

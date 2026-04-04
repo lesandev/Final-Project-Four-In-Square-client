@@ -2,6 +2,8 @@ package co.il.leah.project;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.View;
 
 public class BoardUI {
@@ -22,8 +24,6 @@ public class BoardUI {
 
         for (int square = 0; square < 9; square++) {
 
-            if (square == 4) continue;
-
             for (int slot = 0; slot < 4; slot++) {
 
                 String idName = "cell_" + square + "_" + slot;
@@ -31,19 +31,30 @@ public class BoardUI {
                         .getIdentifier(idName, "id", activity.getPackageName());
 
                 View cell = activity.findViewById(resId);
+                if (cell == null) continue;
 
                 int finalSquare = square;
                 int finalSlot = slot;
 
                 cell.setOnClickListener(v -> {
 
-                    if (!board.canPlace(finalSquare, finalSlot)) return;
+                    if (board.waitingForSlide) {
+                        if (!board.canSlide(finalSquare)) return;
 
-                    board.place(finalSquare, finalSlot, 1);
+                        board.lastMyHoleIndex = board.holeIndex;
+                        board.slide(finalSquare);
+                        board.waitingForSlide = false;
 
-                    updateUI();
+                        updateUI();
+                        listener.onPlayerMove();
+                    } else {
+                        if (!board.canPlace(finalSquare, finalSlot)) return;
 
-                    listener.onPlayerMove();
+                        board.place(finalSquare, finalSlot, 1);
+                        board.waitingForSlide = true;
+
+                        updateUI();
+                    }
                 });
             }
         }
@@ -53,8 +64,6 @@ public class BoardUI {
 
         for (int square = 0; square < 9; square++) {
 
-            if (square == board.holeIndex) continue;
-
             for (int slot = 0; slot < 4; slot++) {
 
                 String idName = "cell_" + square + "_" + slot;
@@ -62,15 +71,41 @@ public class BoardUI {
                         .getIdentifier(idName, "id", activity.getPackageName());
 
                 View cell = activity.findViewById(resId);
+                if (cell == null) continue;
+
+                if (square == board.holeIndex) {
+                    cell.setBackgroundColor(Color.BLACK);
+                    continue;
+                }
 
                 int value = board.squares[square][slot];
 
+                boolean canSlide = board.waitingForSlide && board.canSlide(square);
+
                 if (value == 1) {
-                    cell.setBackgroundColor(Color.BLUE);
+                    GradientDrawable background = new GradientDrawable();
+                    background.setColor(canSlide ? Color.GREEN : Color.WHITE);
+
+                    GradientDrawable circle = new GradientDrawable();
+                    circle.setShape(GradientDrawable.OVAL);
+                    circle.setColor(Color.BLUE);
+
+                    LayerDrawable layers = new LayerDrawable(
+                            new GradientDrawable[]{background, circle});
+                    cell.setBackground(layers);
                 } else if (value == 2) {
-                    cell.setBackgroundColor(Color.RED);
+                    GradientDrawable background = new GradientDrawable();
+                    background.setColor(canSlide ? Color.GREEN : Color.WHITE);
+
+                    GradientDrawable circle = new GradientDrawable();
+                    circle.setShape(GradientDrawable.OVAL);
+                    circle.setColor(Color.RED);
+
+                    LayerDrawable layers = new LayerDrawable(
+                            new GradientDrawable[]{background, circle});
+                    cell.setBackground(layers);
                 } else {
-                    cell.setBackgroundColor(Color.LTGRAY);
+                    cell.setBackgroundColor(canSlide ? Color.GREEN : Color.WHITE);
                 }
             }
         }

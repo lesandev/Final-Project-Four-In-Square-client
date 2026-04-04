@@ -5,6 +5,7 @@ public class Board {
     public int[][] squares;
     public int holeIndex;
     public int lastMyHoleIndex = -1;
+    public boolean waitingForSlide = false;
 
     // constructor
     public Board() {
