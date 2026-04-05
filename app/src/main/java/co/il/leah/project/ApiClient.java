@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class ApiClient {
 
     public interface Callback {
-        void onResponse(int[][] squares, int holeIndex);
+        void onResponse(int[][] board, int holeIndex);
     }
 
     public static void sendBoard(Board board, Callback callback) {
@@ -20,7 +20,9 @@ public class ApiClient {
             try {
 
                 // 🌐 כתובת השרת
-                URL url = new URL("http://10.0.2.2:5000/move");
+                // לאמולטור: "http://10.0.2.2:5000/move"
+                // למכשיר פיזי: שני את ה-IP לכתובת המחשב שלך
+                URL url = new URL("http://192.168.1.XXX:5000/move");
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -32,16 +34,16 @@ public class ApiClient {
                 JSONObject json = new JSONObject();
                 json.put("holeIndex", board.holeIndex);
 
-                JSONArray squaresArray = new JSONArray();
-                for (int i = 0; i < 9; i++) {
+                JSONArray boardArray = new JSONArray();
+                for (int i = 0; i < 6; i++) {
                     JSONArray row = new JSONArray();
-                    for (int j = 0; j < 4; j++) {
-                        row.put(board.squares[i][j]);
+                    for (int j = 0; j < 6; j++) {
+                        row.put(board.cells[i][j]);
                     }
-                    squaresArray.put(row);
+                    boardArray.put(row);
                 }
 
-                json.put("squares", squaresArray);
+                json.put("board", boardArray);
 
                 // 📤 שליחה
                 OutputStream os = conn.getOutputStream();
@@ -56,21 +58,21 @@ public class ApiClient {
                 JSONObject res = new JSONObject(response);
 
                 // 📥 המרה חזרה למערך
-                JSONArray arr = res.getJSONArray("squares");
+                JSONArray arr = res.getJSONArray("board");
 
-                int[][] newSquares = new int[9][4];
+                int[][] newBoard = new int[6][6];
 
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 6; i++) {
                     JSONArray inner = arr.getJSONArray(i);
-                    for (int j = 0; j < 4; j++) {
-                        newSquares[i][j] = inner.getInt(j);
+                    for (int j = 0; j < 6; j++) {
+                        newBoard[i][j] = inner.getInt(j);
                     }
                 }
 
                 int newHole = res.getInt("holeIndex");
 
                 // 🔁 החזרה ל־MainActivity
-                callback.onResponse(newSquares, newHole);
+                callback.onResponse(newBoard, newHole);
 
             } catch (Exception e) {
                 e.printStackTrace();

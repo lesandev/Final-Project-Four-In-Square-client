@@ -2,25 +2,48 @@ package co.il.leah.project;
 
 public class Board {
 
-    public int[][] squares;
-    public int holeIndex;
+    public int[][] cells;  // 6x6 grid
+    public int holeIndex;  // 0-8, which 2x2 block is the hole
     public int lastMyHoleIndex = -1;
     public boolean waitingForSlide = false;
 
     // constructor
     public Board() {
-        squares = new int[9][4];
+        cells = new int[6][6];
         holeIndex = 4;
+    }
+
+    // המרה מ-square+slot לקואורדינטות 6x6
+    private int toGlobalRow(int square, int slot) {
+        int squareRow = square / 3;
+        int miniRow = slot / 2;
+        return squareRow * 2 + miniRow;
+    }
+
+    private int toGlobalCol(int square, int slot) {
+        int squareCol = square % 3;
+        int miniCol = slot % 2;
+        return squareCol * 2 + miniCol;
+    }
+
+    // קבלת ערך לפי square+slot
+    public int getCell(int square, int slot) {
+        return cells[toGlobalRow(square, slot)][toGlobalCol(square, slot)];
+    }
+
+    // הגדרת ערך לפי square+slot
+    public void setCell(int square, int slot, int value) {
+        cells[toGlobalRow(square, slot)][toGlobalCol(square, slot)] = value;
     }
 
     // בדיקה אם אפשר לשים
     public boolean canPlace(int square, int slot) {
-        return square != holeIndex && squares[square][slot] == 0;
+        return square != holeIndex && getCell(square, slot) == 0;
     }
 
     // הנחת אבן
     public void place(int square, int slot, int value) {
-        squares[square][slot] = value;
+        setCell(square, slot, value);
     }
 
     // בדיקה אם אפשר להזיז
@@ -44,18 +67,30 @@ public class Board {
         return true;
     }
 
-    // הזזה
+    // הזזה - מעביר את התוכן מ-fromSquare לחור
     public void slide(int fromSquare) {
-        int[] temp = squares[fromSquare];
-        squares[fromSquare] = new int[4];
-        squares[holeIndex] = temp;
+        // שמירת הערכים מהריבוע שמוזז
+        int[] temp = new int[4];
+        for (int slot = 0; slot < 4; slot++) {
+            temp[slot] = getCell(fromSquare, slot);
+        }
+
+        // איפוס הריבוע שמוזז (הופך לחור)
+        for (int slot = 0; slot < 4; slot++) {
+            setCell(fromSquare, slot, 0);
+        }
+
+        // העתקת הערכים לחור הישן
+        for (int slot = 0; slot < 4; slot++) {
+            setCell(holeIndex, slot, temp[slot]);
+        }
 
         holeIndex = fromSquare;
     }
 
     // עדכון מהשרת
-    public void updateFromServer(int[][] newSquares, int newHoleIndex) {
-        squares = newSquares;
+    public void updateFromServer(int[][] newCells, int newHoleIndex) {
+        cells = newCells;
         holeIndex = newHoleIndex;
     }
 }

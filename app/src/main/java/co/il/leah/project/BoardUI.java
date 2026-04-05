@@ -78,7 +78,7 @@ public class BoardUI {
                     continue;
                 }
 
-                int value = board.squares[square][slot];
+                int value = board.getCell(square, slot);
 
                 boolean canSlide = board.waitingForSlide && board.canSlide(square);
 

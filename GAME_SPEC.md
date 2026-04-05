@@ -154,7 +154,14 @@ The game state is represented by the following structure:
 
 ```json
 {
-  "board": [[null, "R", null, null], "..."],
+  "board": [
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null],
+    [null, null, null, null, null, null]
+  ],
   "phase": "placement",
   "currentPlayer": "R",
   "placed": { "R": 0, "B": 0 },
@@ -168,7 +175,7 @@ The game state is represented by the following structure:
 
 ### Field Meaning
 
-- `board`: 9 squares, each square containing 4 mini-slots
+- `board`: 6×6 grid representing all 36 mini-slots directly (row, col)
 - `phase`: current phase of the turn
 - `currentPlayer`: whose turn it is now
 - `placed`: number of pieces already placed by each player
@@ -212,7 +219,14 @@ Response:
   "gameId": "abc123",
   "playerToken": "tok_xxx",
   "state": {
-    "board": [[null, null, null, null], "..."],
+    "board": [
+      [null, null, null, null, null, null],
+      [null, null, null, null, null, null],
+      [null, null, null, null, null, null],
+      [null, null, null, null, null, null],
+      [null, null, null, null, null, null],
+      [null, null, null, null, null, null]
+    ],
     "phase": "placement",
     "currentPlayer": "R",
     "placed": { "R": 0, "B": 0 },
