@@ -22,7 +22,8 @@ public class ApiClient {
                 // 🌐 כתובת השרת
                 // לאמולטור: "http://10.0.2.2:5000/move"
                 // למכשיר פיזי: שני את ה-IP לכתובת המחשב שלך
-                URL url = new URL("http://192.168.1.XXX:5000/move");
+                URL url = new URL("http://192.168.1.52:5000/move");
+                //http://10.0.2.2:5000/move FOR EMULATOR
 
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
