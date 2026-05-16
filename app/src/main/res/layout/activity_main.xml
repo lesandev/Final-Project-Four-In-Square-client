@@ -4,192 +4,119 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EDEDED"
-    android:padding="16dp">
+    android:background="@color/game_background">
 
-    <GridLayout
-        android:id="@+id/mainBoard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:rowCount="3"
-        android:columnCount="3"
-        android:background="#2F2F6F"
-        android:padding="8dp"
+    <View
+        android:id="@+id/topDecoration"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="-50dp"
+        android:layout_marginEnd="-50dp"
+        android:background="@drawable/circle_decoration"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/bottomDecoration"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="-40dp"
+        android:layout_marginStart="-40dp"
+        android:background="@drawable/circle_decoration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/logoContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/playButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <GridLayout
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:rowCount="2"
+            android:columnCount="2"
+            android:background="@color/game_primary"
+            android:padding="8dp"
+            android:layout_marginBottom="32dp">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@color/player_color" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@color/cell_empty" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@color/cell_empty" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:background="@color/computer_color" />
+
+        </GridLayout>
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Four In Square"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/game_primary"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/subtitleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="תפוס ארבעה בריבוע!"
+            android:textSize="18sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="8dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="התחל לשחק"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:backgroundTint="@color/game_accent"
+        app:cornerRadius="30dp"
+        android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintDimensionRatio="1:1">
-
-        <!-- row 1 -->
-
-        <!-- square 0 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_0_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_0_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_0_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_0_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 1 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_1_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_1_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_1_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_1_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 2 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_2_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_2_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_2_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_2_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- row 2 -->
-
-        <!-- square 3 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_3_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_3_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_3_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_3_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 4 (starts as hole) -->
-        <GridLayout
-            android:id="@+id/square4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_4_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_4_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_4_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_4_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 5 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_5_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_5_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_5_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_5_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- row 3 -->
-
-        <!-- square 6 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_6_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_6_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_6_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_6_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 7 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_7_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_7_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_7_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_7_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-        <!-- square 8 -->
-        <GridLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_margin="4dp"
-            android:rowCount="2"
-            android:columnCount="2"
-            android:background="#3949AB"
-            android:padding="3dp">
-
-            <View android:id="@+id/cell_8_0" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_8_1" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_8_2" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-            <View android:id="@+id/cell_8_3" android:layout_width="0dp" android:layout_height="0dp" android:layout_rowWeight="1" android:layout_columnWeight="1" android:layout_margin="2dp" android:background="#D9D9D9"/>
-        </GridLayout>
-
-    </GridLayout>
+        app:layout_constraintTop_toBottomOf="@id/logoContainer"
+        android:layout_marginBottom="100dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

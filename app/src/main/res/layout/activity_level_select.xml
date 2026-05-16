@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/game_background"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/selectLevelTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="בחר שלב"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/game_primary"
+        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/selectLevelSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="כל השלבים פתוחים!"
+        android:textSize="16sp"
+        android:textColor="@color/text_secondary"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/selectLevelTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <GridLayout
+        android:id="@+id/levelsGrid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:rowCount="3"
+        android:columnCount="3"
+        android:alignmentMode="alignMargins"
+        android:columnOrderPreserved="false"
+        app:layout_constraintTop_toBottomOf="@id/selectLevelSubtitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="40dp">
+
+        <Button
+            android:id="@+id/level1"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="1"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level2"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="2"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level3"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="3"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level4"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="4"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level5"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="5"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level6"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="6"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level7"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="7"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level8"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="8"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+        <Button
+            android:id="@+id/level9"
+            android:layout_width="0dp"
+            android:layout_height="90dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_margin="8dp"
+            android:text="9"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/level_button"
+            app:cornerRadius="16dp"
+            android:elevation="4dp" />
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
