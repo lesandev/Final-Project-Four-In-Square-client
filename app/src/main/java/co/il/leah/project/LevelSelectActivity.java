@@ -18,9 +18,7 @@ public class LevelSelectActivity extends AppCompatActivity {
 
     private void setupLevelButtons() {
         int[] buttonIds = {
-            R.id.level1, R.id.level2, R.id.level3,
-            R.id.level4, R.id.level5, R.id.level6,
-            R.id.level7, R.id.level8, R.id.level9
+            R.id.level1, R.id.level2, R.id.level3
         };
 
         for (int buttonId : buttonIds) {

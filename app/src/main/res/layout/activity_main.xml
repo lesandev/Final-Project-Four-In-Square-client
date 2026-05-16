@@ -95,7 +95,7 @@
             android:id="@+id/subtitleText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="תפוס ארבעה בריבוע!"
+            android:text="Four In Square"
             android:textSize="18sp"
             android:textColor="@color/text_secondary"
             android:layout_marginTop="8dp" />
@@ -106,7 +106,7 @@
         android:id="@+id/playButton"
         android:layout_width="200dp"
         android:layout_height="60dp"
-        android:text="התחל לשחק"
+        android:text="Start Game"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"
