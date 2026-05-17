@@ -87,10 +87,13 @@ public class BoardUI {
                 int value = board.getCell(square, slot);
 
                 boolean canSlide = board.waitingForSlide && board.canSlide(square);
+                // ריבוע החור הקודם — חסום, מוצג באפור
+                boolean isBlocked = board.waitingForSlide && (square == board.lastMyHoleIndex);
+                int bgColor = canSlide ? Color.GREEN : (isBlocked ? Color.LTGRAY : Color.WHITE);
 
                 if (value == 1) {
                     GradientDrawable background = new GradientDrawable();
-                    background.setColor(canSlide ? Color.GREEN : Color.WHITE);
+                    background.setColor(bgColor);
 
                     GradientDrawable circle = new GradientDrawable();
                     circle.setShape(GradientDrawable.OVAL);
@@ -101,7 +104,7 @@ public class BoardUI {
                     cell.setBackground(layers);
                 } else if (value == 2) {
                     GradientDrawable background = new GradientDrawable();
-                    background.setColor(canSlide ? Color.GREEN : Color.WHITE);
+                    background.setColor(bgColor);
 
                     GradientDrawable circle = new GradientDrawable();
                     circle.setShape(GradientDrawable.OVAL);
@@ -111,7 +114,7 @@ public class BoardUI {
                             new GradientDrawable[]{background, circle});
                     cell.setBackground(layers);
                 } else {
-                    cell.setBackgroundColor(canSlide ? Color.GREEN : Color.WHITE);
+                    cell.setBackgroundColor(bgColor);
                 }
             }
         }
