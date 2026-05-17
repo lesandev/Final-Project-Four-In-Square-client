@@ -82,8 +82,7 @@ public class ApiClient {
     private static JSONObject buildBoardJson(Board board) throws Exception {
         JSONObject json = new JSONObject();
         json.put("holeIndex", board.holeIndex);
-        json.put("lastAiHoleIndex", board.lastAiHoleIndex);
-        json.put("lastPlayerHoleIndex", board.lastMyHoleIndex);
+        json.put("lastHoleIndex", board.lastHoleIndex);
 
         JSONArray boardArray = new JSONArray();
         for (int i = 0; i < 6; i++) {

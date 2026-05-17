@@ -46,8 +46,8 @@ public class BoardUI {
                     if (board.waitingForSlide) {
                         if (!board.canSlide(finalSquare)) return;
 
-                        board.lastMyHoleIndex = board.holeIndex;
                         board.slide(finalSquare);
+                        board.lastHoleIndex = board.holeIndex; // החור החדש שנוצר — המחשב לא יחזור אליו
                         board.waitingForSlide = false;
 
                         enabled = false; // נועל לחיצות עד שהשרת יחזיר תשובה
