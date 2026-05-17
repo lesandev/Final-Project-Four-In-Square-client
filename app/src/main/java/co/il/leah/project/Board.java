@@ -94,38 +94,14 @@ public class Board {
         holeIndex = newHoleIndex;
     }
 
-    // בדיקת ניצחון - מחזיר 1 אם שחקן ניצח, 2 אם המחשב ניצח, 0 אם אין ניצחון
+    // בדיקת ניצחון — שחקן ניצח אם מילא את כל 4 המשבצות באחד מ-9 הריבועים
     public int checkWinner() {
-        // בדיקת שורות
-        for (int r = 0; r < 6; r++) {
-            for (int c = 0; c <= 2; c++) {
-                int v = cells[r][c];
-                if (v != 0 && v == cells[r][c+1] && v == cells[r][c+2] && v == cells[r][c+3])
-                    return v;
-            }
-        }
-        // בדיקת עמודות
-        for (int c = 0; c < 6; c++) {
-            for (int r = 0; r <= 2; r++) {
-                int v = cells[r][c];
-                if (v != 0 && v == cells[r+1][c] && v == cells[r+2][c] && v == cells[r+3][c])
-                    return v;
-            }
-        }
-        // בדיקת אלכסון מלמעלה-שמאל למטה-ימין
-        for (int r = 0; r <= 2; r++) {
-            for (int c = 0; c <= 2; c++) {
-                int v = cells[r][c];
-                if (v != 0 && v == cells[r+1][c+1] && v == cells[r+2][c+2] && v == cells[r+3][c+3])
-                    return v;
-            }
-        }
-        // בדיקת אלכסון מלמעלה-ימין למטה-שמאל
-        for (int r = 0; r <= 2; r++) {
-            for (int c = 3; c < 6; c++) {
-                int v = cells[r][c];
-                if (v != 0 && v == cells[r+1][c-1] && v == cells[r+2][c-2] && v == cells[r+3][c-3])
-                    return v;
+        for (int square = 0; square < 9; square++) {
+            if (square == holeIndex) continue; // ריבוע החור לא נספר
+            int v = getCell(square, 0);
+            if (v == 0) continue;
+            if (v == getCell(square, 1) && v == getCell(square, 2) && v == getCell(square, 3)) {
+                return v; // 1 = שחקן ניצח, 2 = מחשב ניצח
             }
         }
         return 0;

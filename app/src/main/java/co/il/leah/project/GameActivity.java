@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity {
         boardUI.updateUI();
     }
 
-    // שולח את הלוח לשרת — המחשב עושה מהלך ומחזיר winner אם ניצח
+    // שולח את הלוח לשרת — המחשב עושה מהלך, ואז בודקים ניצחון מקומית
     void sendComputerMove() {
         ApiClient.sendBoard(board, (newSquares, newHole, winner) -> {
             runOnUiThread(() -> {
@@ -44,8 +44,10 @@ public class GameActivity extends AppCompatActivity {
                 boardUI.enabled = true;
                 boardUI.updateUI();
 
-                if (winner != 0) {
-                    showGameOverDialog(winner);
+                // בדיקה מקומית — השרת לא מחזיר winner
+                int localWinner = board.checkWinner();
+                if (localWinner != 0) {
+                    showGameOverDialog(localWinner);
                 }
             });
         });
