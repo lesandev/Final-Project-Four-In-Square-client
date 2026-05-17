@@ -8,12 +8,14 @@ public class GameActivity extends AppCompatActivity {
 
     Board board;
     BoardUI boardUI;
+    int level;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        level = getIntent().getIntExtra("level", 2);
         startGame();
     }
 
@@ -41,7 +43,7 @@ public class GameActivity extends AppCompatActivity {
 
     // שולח לשרת כדי שהמחשב יזוז, ואז בודק ניצחון דרך השרת
     void sendComputerMove() {
-        ApiClient.sendBoard(board, (newSquares, newHole) -> {
+        ApiClient.sendBoard(board, level, (newSquares, newHole) -> {
             runOnUiThread(() -> {
                 board.lastAiHoleIndex = board.holeIndex; // חור לפני מהלך המחשב — המחשב לא יחזור לשם
                 board.updateFromServer(newSquares, newHole);

@@ -21,12 +21,14 @@ public class LevelSelectActivity extends AppCompatActivity {
             R.id.level1, R.id.level2, R.id.level3
         };
 
-        for (int buttonId : buttonIds) {
-            Button button = findViewById(buttonId);
+        for (int i = 0; i < buttonIds.length; i++) {
+            int level = i + 1;
+            Button button = findViewById(buttonIds[i]);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(LevelSelectActivity.this, GameActivity.class);
+                    intent.putExtra("level", level);
                     startActivity(intent);
                 }
             });

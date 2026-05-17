@@ -13,8 +13,10 @@ import java.util.Scanner;
 public class ApiClient {
 
     private static final String TAG = "ApiClient";
-    private static final String MOVE_URL = "http://192.168.1.52:8000/move";
-    private static final String CHECK_WIN_URL = "http://192.168.1.52:8000/check_win";
+    private static final String BASE_URL = "http://192.168.1.52:8000";
+    private static final String MOVE_URL = BASE_URL + "/move";
+    private static final String RANDOM_MOVE_URL = BASE_URL + "/random_move";
+    private static final String CHECK_WIN_URL = BASE_URL + "/check_win";
 
     public interface MoveCallback {
         void onResponse(int[][] board, int holeIndex);
@@ -24,15 +26,16 @@ public class ApiClient {
         void onResult(int winner);
     }
 
-    // שולח את הלוח לשרת כדי שהמחשב יעשה מהלך
-    public static void sendBoard(Board board, MoveCallback callback) {
+    // שולח את הלוח לשרת כדי שהמחשב יעשה מהלך לפי השלב
+    public static void sendBoard(Board board, int level, MoveCallback callback) {
+        String url = (level == 1) ? RANDOM_MOVE_URL : MOVE_URL;
         new Thread(() -> {
             try {
-                Log.d(TAG, "POST /move");
+                Log.d(TAG, "POST " + url);
 
                 JSONObject json = buildBoardJson(board);
 
-                String response = postJson(MOVE_URL, json);
+                String response = postJson(url, json);
                 if (response == null) return;
 
                 JSONObject res = new JSONObject(response);
