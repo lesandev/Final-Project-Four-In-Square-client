@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity {
         });
 
         boardUI.updateUI();
+        sendComputerMove(); // המחשב תמיד מתחיל ראשון
     }
 
     // שולח לשרת כדי שהמחשב יזוז, ואז בודק ניצחון דרך השרת
