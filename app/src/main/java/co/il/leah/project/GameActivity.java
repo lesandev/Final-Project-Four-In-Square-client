@@ -22,33 +22,38 @@ public class GameActivity extends AppCompatActivity {
         boardUI = new BoardUI(this, board);
 
         boardUI.setupClicks(() -> {
-            // שלב 1: בדיקת ניצחון שחקן — מקומית על הטלפון
-            int winner = board.checkWinner();
-            if (winner != 0) {
-                boardUI.enabled = true;
-                showGameOverDialog(winner);
-                return;
-            }
-            // שלב 2: אם השחקן לא ניצח — שולח לשרת כדי שהמחשב יזוז
-            sendComputerMove();
+            // אחרי תור השחקן — שואלים את השרת אם יש ניצחון
+            ApiClient.checkWin(board, winner -> {
+                runOnUiThread(() -> {
+                    if (winner != 0) {
+                        boardUI.enabled = true;
+                        showGameOverDialog(winner);
+                    } else {
+                        sendComputerMove();
+                    }
+                });
+            });
         });
 
         boardUI.updateUI();
     }
 
-    // שולח את הלוח לשרת — המחשב עושה מהלך, ואז בודקים ניצחון מקומית
+    // שולח לשרת כדי שהמחשב יזוז, ואז בודק ניצחון דרך השרת
     void sendComputerMove() {
-        ApiClient.sendBoard(board, (newSquares, newHole, winner) -> {
+        ApiClient.sendBoard(board, (newSquares, newHole) -> {
             runOnUiThread(() -> {
                 board.updateFromServer(newSquares, newHole);
-                boardUI.enabled = true;
                 boardUI.updateUI();
 
-                // בדיקה מקומית — השרת לא מחזיר winner
-                int localWinner = board.checkWinner();
-                if (localWinner != 0) {
-                    showGameOverDialog(localWinner);
-                }
+                // אחרי תור המחשב — שואלים את השרת אם יש ניצחון
+                ApiClient.checkWin(board, winner -> {
+                    runOnUiThread(() -> {
+                        boardUI.enabled = true;
+                        if (winner != 0) {
+                            showGameOverDialog(winner);
+                        }
+                    });
+                });
             });
         });
     }
