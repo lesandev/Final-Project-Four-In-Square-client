@@ -21,32 +21,27 @@ public class GameActivity extends AppCompatActivity {
         board = new Board();
         boardUI = new BoardUI(this, board);
 
-        boardUI.setupClicks(() -> checkPlayerWinThenComputerMove());
+        boardUI.setupClicks(() -> {
+            // שלב 1: בדיקת ניצחון שחקן — מקומית על הטלפון
+            int winner = board.checkWinner();
+            if (winner != 0) {
+                boardUI.enabled = true;
+                showGameOverDialog(winner);
+                return;
+            }
+            // שלב 2: אם השחקן לא ניצח — שולח לשרת כדי שהמחשב יזוז
+            sendComputerMove();
+        });
 
         boardUI.updateUI();
-        sendComputerMove();
     }
 
-    // שלב 1: אחרי תור השחקן — שולח לשרת לבדוק אם השחקן ניצח
-    void checkPlayerWinThenComputerMove() {
-        ApiClient.sendBoard(board, true, (newSquares, newHole, winner) -> {
-            runOnUiThread(() -> {
-                if (winner != 0) {
-                    // השחקן ניצח או תיקו — מציג דיאלוג
-                    showGameOverDialog(winner);
-                } else {
-                    // אין ניצחון — עכשיו המחשב עושה את שלו
-                    sendComputerMove();
-                }
-            });
-        });
-    }
-
-    // שלב 2: שולח לשרת כדי שהמחשב יזוז ובודק אם המחשב ניצח
+    // שולח את הלוח לשרת — המחשב עושה מהלך ומחזיר winner אם ניצח
     void sendComputerMove() {
-        ApiClient.sendBoard(board, false, (newSquares, newHole, winner) -> {
+        ApiClient.sendBoard(board, (newSquares, newHole, winner) -> {
             runOnUiThread(() -> {
                 board.updateFromServer(newSquares, newHole);
+                boardUI.enabled = true;
                 boardUI.updateUI();
 
                 if (winner != 0) {

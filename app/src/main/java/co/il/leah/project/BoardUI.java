@@ -15,6 +15,8 @@ public class BoardUI {
         void onPlayerMove();
     }
 
+    public boolean enabled = true;
+
     public BoardUI(Activity activity, Board board) {
         this.activity = activity;
         this.board = board;
@@ -38,6 +40,9 @@ public class BoardUI {
 
                 cell.setOnClickListener(v -> {
 
+                    // חסום לחיצות בזמן שמחכים לשרת
+                    if (!enabled) return;
+
                     if (board.waitingForSlide) {
                         if (!board.canSlide(finalSquare)) return;
 
@@ -45,6 +50,7 @@ public class BoardUI {
                         board.slide(finalSquare);
                         board.waitingForSlide = false;
 
+                        enabled = false; // נועל לחיצות עד שהשרת יחזיר תשובה
                         updateUI();
                         listener.onPlayerMove();
                     } else {

@@ -15,17 +15,12 @@ public class ApiClient {
     private static final String TAG = "ApiClient";
     private static final String SERVER_URL = "http://192.168.1.52:8000/move";
 
-    // winner: 0 = game continues, 1 = player wins, 2 = computer wins, -1 = tie
+    // winner: 0 = game continues, 2 = computer wins, -1 = tie
     public interface Callback {
         void onResponse(int[][] board, int holeIndex, int winner);
     }
 
     public static void sendBoard(Board board, Callback callback) {
-        sendBoard(board, false, callback);
-    }
-
-    // checkOnly=true → שולח לשרת רק לבדיקת ניצחון, בלי שהמחשב יזוז
-    public static void sendBoard(Board board, boolean checkOnly, Callback callback) {
 
         new Thread(() -> {
             try {
@@ -41,7 +36,6 @@ public class ApiClient {
 
                 JSONObject json = new JSONObject();
                 json.put("holeIndex", board.holeIndex);
-                json.put("checkOnly", checkOnly);
 
                 JSONArray boardArray = new JSONArray();
                 for (int i = 0; i < 6; i++) {
