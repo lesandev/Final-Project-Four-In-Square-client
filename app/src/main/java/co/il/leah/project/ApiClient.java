@@ -83,6 +83,7 @@ public class ApiClient {
         JSONObject json = new JSONObject();
         json.put("holeIndex", board.holeIndex);
         json.put("lastAiHoleIndex", board.lastAiHoleIndex);
+        json.put("lastPlayerHoleIndex", board.lastMyHoleIndex);
 
         JSONArray boardArray = new JSONArray();
         for (int i = 0; i < 6; i++) {
