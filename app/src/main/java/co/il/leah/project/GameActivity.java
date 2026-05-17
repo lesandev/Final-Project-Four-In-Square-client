@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
     void sendComputerMove() {
         ApiClient.sendBoard(board, level, (newSquares, newHole) -> {
             runOnUiThread(() -> {
-                board.lastAiHoleIndex = board.holeIndex; // חור לפני מהלך המחשב — המחשב לא יחזור לשם
+                board.lastAiHoleIndex = newHole; // החור שהמחשב יצר — הוא לא יחזור לשם
                 board.updateFromServer(newSquares, newHole);
                 boardUI.updateUI();
 
