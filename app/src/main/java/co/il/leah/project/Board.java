@@ -4,7 +4,8 @@ public class Board {
 
     public int[][] cells;  // 6x6 grid
     public int holeIndex;  // 0-8, which 2x2 block is the hole
-    public int lastMyHoleIndex = -1;
+    public int lastMyHoleIndex = -1;   // ריבוע שהשחקן לא יכול לחזור אליו
+    public int lastAiHoleIndex = -1;   // ריבוע שהמחשב לא יכול לחזור אליו
     public boolean waitingForSlide = false;
 
     // constructor
