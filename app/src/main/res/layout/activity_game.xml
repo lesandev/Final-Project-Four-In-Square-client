@@ -6,20 +6,19 @@
     android:layout_height="match_parent"
     android:background="#EDEDED">
 
-    <!-- Title bar -->
+    <!-- Title -->
     <TextView
         android:id="@+id/titleBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#2F2F6F"
-        android:paddingTop="18dp"
-        android:paddingBottom="14dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="4dp"
         android:gravity="center"
         android:text="Four in a Square"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
+        android:textColor="#2F2F6F"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:letterSpacing="0.08"
+        android:letterSpacing="0.06"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
