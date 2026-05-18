@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.view.View;
+import android.widget.TextView;
 
 public class BoardUI {
 
     Activity activity;
     Board board;
+    TextView statusLabel;
 
     public interface OnMoveListener {
         void onPlayerMove();
@@ -20,6 +22,13 @@ public class BoardUI {
     public BoardUI(Activity activity, Board board) {
         this.activity = activity;
         this.board = board;
+        statusLabel = activity.findViewById(R.id.statusLabel);
+    }
+
+    public void setStatus(String text, boolean isPlayerTurn) {
+        if (statusLabel == null) return;
+        statusLabel.setText(text);
+        statusLabel.setBackgroundColor(isPlayerTurn ? Color.parseColor("#1565C0") : Color.parseColor("#C62828"));
     }
 
     public void setupClicks(OnMoveListener listener) {
@@ -46,11 +55,12 @@ public class BoardUI {
                     if (board.waitingForSlide) {
                         if (!board.canSlide(finalSquare)) return;
 
-                        board.lastHoleIndex = board.holeIndex; // החור הישן — המחשב לא יחזור אליו
+                        board.lastHoleIndex = board.holeIndex;
                         board.slide(finalSquare);
                         board.waitingForSlide = false;
 
-                        enabled = false; // נועל לחיצות עד שהשרת יחזיר תשובה
+                        enabled = false;
+                        setStatus("Computer's turn…", false);
                         updateUI();
                         listener.onPlayerMove();
                     } else {
@@ -59,6 +69,7 @@ public class BoardUI {
                         board.place(finalSquare, finalSlot, 1);
                         board.waitingForSlide = true;
 
+                        setStatus("Your turn — Slide a square", true);
                         updateUI();
                     }
                 });

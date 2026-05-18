@@ -37,9 +37,10 @@ public class GameActivity extends AppCompatActivity {
             });
         });
 
-        boardUI.enabled = false; // נועל עד שהמחשב יסיים את המהלך הראשון
+        boardUI.enabled = false;
+        boardUI.setStatus("Computer's turn…", false);
         boardUI.updateUI();
-        sendComputerMove(); // המחשב תמיד מתחיל ראשון
+        sendComputerMove();
     }
 
     // שולח לשרת כדי שהמחשב יזוז, ואז בודק ניצחון דרך השרת
@@ -56,6 +57,8 @@ public class GameActivity extends AppCompatActivity {
                         boardUI.enabled = true;
                         if (winner != 0) {
                             showGameOverDialog(winner);
+                        } else {
+                            boardUI.setStatus("Your turn — Place a piece", true);
                         }
                     });
                 });
