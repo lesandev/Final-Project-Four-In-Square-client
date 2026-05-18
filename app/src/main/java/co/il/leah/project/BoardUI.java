@@ -28,7 +28,7 @@ public class BoardUI {
     public void setStatus(String text, boolean isPlayerTurn) {
         if (statusLabel == null) return;
         statusLabel.setText(text);
-        statusLabel.setBackgroundColor(isPlayerTurn ? Color.parseColor("#1565C0") : Color.parseColor("#C62828"));
+        statusLabel.setTextColor(isPlayerTurn ? Color.parseColor("#1565C0") : Color.parseColor("#C62828"));
     }
 
     public void setupClicks(OnMoveListener listener) {
