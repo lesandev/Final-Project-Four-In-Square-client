@@ -37,6 +37,7 @@ public class GameActivity extends AppCompatActivity {
             });
         });
 
+        boardUI.enabled = false; // נועל עד שהמחשב יסיים את המהלך הראשון
         boardUI.updateUI();
         sendComputerMove(); // המחשב תמיד מתחיל ראשון
     }
@@ -45,8 +46,8 @@ public class GameActivity extends AppCompatActivity {
     void sendComputerMove() {
         ApiClient.sendBoard(board, level, (newSquares, newHole) -> {
             runOnUiThread(() -> {
+                        board.lastHoleIndex = board.holeIndex; // החור הישן — השחקן לא יחזור אליו
                 board.updateFromServer(newSquares, newHole);
-                board.lastHoleIndex = newHole; // החור שהמחשב יצר — השחקן לא יחזור אליו
                 boardUI.updateUI();
 
                 // אחרי תור המחשב — שואלים את השרת אם יש ניצחון
