@@ -112,14 +112,18 @@ public class BoardUI {
                     if (board.waitingForSlide) {
                         if (!board.canSlide(finalSquare)) return;
 
-                        board.lastHoleIndex = board.holeIndex;
-                        board.slide(finalSquare);
-                        board.waitingForSlide = false;
-
                         enabled = false;
-                        setStatus("Computer's turn…", false);
-                        updateUI();
-                        listener.onPlayerMove();
+                        int currentHole = board.holeIndex;
+
+                        // אנימציה: הריבוע חולק לתוך החור, ואז מתעדכן המצב
+                        animateSlideForward(finalSquare, currentHole, () -> {
+                            board.lastHoleIndex = board.holeIndex;
+                            board.slide(finalSquare);
+                            board.waitingForSlide = false;
+                            setStatus("Computer's turn…", false);
+                            updateUI();
+                            listener.onPlayerMove();
+                        });
                     } else {
                         if (!board.canPlace(finalSquare, finalSlot)) return;
 
