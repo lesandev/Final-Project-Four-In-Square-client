@@ -1,13 +1,20 @@
 package co.il.leah.project;
 
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.TextView;
 
 public class BoardUI {
+
+    private static final long SLIDE_DURATION_MS = 500;
 
     Activity activity;
     Board board;
@@ -31,17 +38,70 @@ public class BoardUI {
         statusLabel.setTextColor(isPlayerTurn ? Color.parseColor("#1565C0") : Color.parseColor("#C62828"));
     }
 
+    /**
+     * Animates the GridLayout of fromSquare sliding toward toHole.
+     * The board state must NOT be updated before calling this — animation runs first,
+     * then onComplete is called so the caller can update state and call updateUI().
+     */
+    public void animateSlideForward(int fromSquare, int toHole, Runnable onComplete) {
+        View fromCell = getCellView(fromSquare, 0);
+        View holeCell = getCellView(toHole, 0);
+
+        if (fromCell == null || holeCell == null) {
+            onComplete.run();
+            return;
+        }
+
+        ViewGroup fromView = (ViewGroup) fromCell.getParent();
+        ViewGroup holeView = (ViewGroup) holeCell.getParent();
+
+        if (fromView == null || holeView == null) {
+            onComplete.run();
+            return;
+        }
+
+        // Use post() to ensure layout is complete before reading positions
+        fromView.post(() -> {
+            float dx = holeView.getLeft() - fromView.getLeft();
+            float dy = holeView.getTop() - fromView.getTop();
+
+            // Bring the sliding square in front
+            fromView.setElevation(8f);
+
+            ObjectAnimator animX = ObjectAnimator.ofFloat(fromView, "translationX", 0f, dx);
+            ObjectAnimator animY = ObjectAnimator.ofFloat(fromView, "translationY", 0f, dy);
+
+            AnimatorSet set = new AnimatorSet();
+            set.playTogether(animX, animY);
+            set.setDuration(SLIDE_DURATION_MS);
+            set.setInterpolator(new DecelerateInterpolator());
+            set.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(android.animation.Animator animation) {
+                    fromView.setTranslationX(0f);
+                    fromView.setTranslationY(0f);
+                    fromView.setElevation(0f);
+                    onComplete.run();
+                }
+            });
+            set.start();
+        });
+    }
+
+    private View getCellView(int square, int slot) {
+        String idName = "cell_" + square + "_" + slot;
+        int resId = activity.getResources()
+                .getIdentifier(idName, "id", activity.getPackageName());
+        return activity.findViewById(resId);
+    }
+
     public void setupClicks(OnMoveListener listener) {
 
         for (int square = 0; square < 9; square++) {
 
             for (int slot = 0; slot < 4; slot++) {
 
-                String idName = "cell_" + square + "_" + slot;
-                int resId = activity.getResources()
-                        .getIdentifier(idName, "id", activity.getPackageName());
-
-                View cell = activity.findViewById(resId);
+                View cell = getCellView(square, slot);
                 if (cell == null) continue;
 
                 int finalSquare = square;
@@ -49,20 +109,25 @@ public class BoardUI {
 
                 cell.setOnClickListener(v -> {
 
-                    // חסום לחיצות בזמן שמחכים לשרת
                     if (!enabled) return;
 
                     if (board.waitingForSlide) {
                         if (!board.canSlide(finalSquare)) return;
 
-                        board.lastHoleIndex = board.holeIndex;
-                        board.slide(finalSquare);
-                        board.waitingForSlide = false;
-
+                        // Disable immediately so the user can't tap again during animation
                         enabled = false;
-                        setStatus("Computer's turn…", false);
-                        updateUI();
-                        listener.onPlayerMove();
+
+                        int currentHole = board.holeIndex;
+
+                        animateSlideForward(finalSquare, currentHole, () -> {
+                            board.lastHoleIndex = board.holeIndex;
+                            board.slide(finalSquare);
+                            board.waitingForSlide = false;
+                            setStatus("Computer's turn…", false);
+                            updateUI();
+                            listener.onPlayerMove();
+                        });
+
                     } else {
                         if (!board.canPlace(finalSquare, finalSlot)) return;
 
@@ -83,11 +148,7 @@ public class BoardUI {
 
             for (int slot = 0; slot < 4; slot++) {
 
-                String idName = "cell_" + square + "_" + slot;
-                int resId = activity.getResources()
-                        .getIdentifier(idName, "id", activity.getPackageName());
-
-                View cell = activity.findViewById(resId);
+                View cell = getCellView(square, slot);
                 if (cell == null) continue;
 
                 if (square == board.holeIndex) {

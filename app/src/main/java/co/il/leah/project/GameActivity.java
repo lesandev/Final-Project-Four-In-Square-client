@@ -47,19 +47,26 @@ public class GameActivity extends AppCompatActivity {
     void sendComputerMove() {
         ApiClient.sendBoard(board, level, (newSquares, newHole) -> {
             runOnUiThread(() -> {
-                        board.lastHoleIndex = board.holeIndex; // החור הישן — השחקן לא יחזור אליו
-                board.updateFromServer(newSquares, newHole);
-                boardUI.updateUI();
+                // newHole is the square that slid (it became the new hole).
+                // Animate it moving into the old hole before updating state.
+                int oldHole = board.holeIndex;
+                int slidingSquare = newHole;
 
-                // אחרי תור המחשב — שואלים את השרת אם יש ניצחון
-                ApiClient.checkWin(board, winner -> {
-                    runOnUiThread(() -> {
-                        boardUI.enabled = true;
-                        if (winner != 0) {
-                            showGameOverDialog(winner);
-                        } else {
-                            boardUI.setStatus("Your turn — Place a piece", true);
-                        }
+                boardUI.animateSlideForward(slidingSquare, oldHole, () -> {
+                    board.lastHoleIndex = board.holeIndex;
+                    board.updateFromServer(newSquares, newHole);
+                    boardUI.updateUI();
+
+                    // אחרי תור המחשב — שואלים את השרת אם יש ניצחון
+                    ApiClient.checkWin(board, winner -> {
+                        runOnUiThread(() -> {
+                            boardUI.enabled = true;
+                            if (winner != 0) {
+                                showGameOverDialog(winner);
+                            } else {
+                                boardUI.setStatus("Your turn — Place a piece", true);
+                            }
+                        });
                     });
                 });
             });
