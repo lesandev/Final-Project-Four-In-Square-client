@@ -43,27 +43,64 @@ public class GameActivity extends AppCompatActivity {
         sendComputerMove();
     }
 
-    // שולח לשרת כדי שהמחשב יזוז, ואז בודק ניצחון דרך השרת
     void sendComputerMove() {
         ApiClient.sendBoard(board, level, (newSquares, newHole) -> {
             runOnUiThread(() -> {
-                        board.lastHoleIndex = board.holeIndex; // החור הישן — השחקן לא יחזור אליו
-                board.updateFromServer(newSquares, newHole);
+                int oldHole = board.holeIndex;
+                int slidingSquare = newHole; // הריבוע שיזוז לתוך החור
+
+                // שלב 1: הצג את האבן המונחת מיד (מצב ביניים — לפני הזזת החור)
+                int[][] intermediate = buildIntermediateState(newSquares, newHole, oldHole);
+                board.updateFromServer(intermediate, oldHole);
                 boardUI.updateUI();
 
-                // אחרי תור המחשב — שואלים את השרת אם יש ניצחון
-                ApiClient.checkWin(board, winner -> {
-                    runOnUiThread(() -> {
-                        boardUI.enabled = true;
-                        if (winner != 0) {
-                            showGameOverDialog(winner);
-                        } else {
-                            boardUI.setStatus("Your turn — Place a piece", true);
-                        }
+                // שלב 2: הריבוע חולק לאט לתוך החור (אנימציה מיידית אחרי הצגת האבן)
+                boardUI.animateSlideForward(slidingSquare, oldHole, () -> {
+
+                    // שלב 3: אחרי האנימציה — עדכן למצב הסופי
+                    board.lastHoleIndex = oldHole;
+                    board.updateFromServer(newSquares, newHole);
+                    boardUI.updateUI();
+
+                    ApiClient.checkWin(board, winner -> {
+                        runOnUiThread(() -> {
+                            boardUI.enabled = true;
+                            if (winner != 0) {
+                                showGameOverDialog(winner);
+                            } else {
+                                boardUI.setStatus("Your turn — Place a piece", true);
+                            }
+                        });
                     });
                 });
             });
         });
+    }
+
+    /**
+     * מחשב מצב ביניים: האבן כבר מונחת, אבל החור עדיין במקומו הישן (הזזה עדיין לא בוצעה חזותית).
+     * עושה זאת על ידי ביטול ההזזה מה-newSquares הסופי.
+     */
+    private int[][] buildIntermediateState(int[][] newSquares, int newHole, int oldHole) {
+        int[][] intermediate = new int[newSquares.length][];
+        for (int i = 0; i < newSquares.length; i++) {
+            intermediate[i] = newSquares[i].clone();
+        }
+
+        // מחזיר את תוכן ריבוע החור הישן (שהוזז לשם) בחזרה לריבוע המקורי שלו
+        int oldHoleRow = (oldHole / 3) * 2;
+        int oldHoleCol = (oldHole % 3) * 2;
+        int newHoleRow = (newHole / 3) * 2;
+        int newHoleCol = (newHole % 3) * 2;
+
+        for (int r = 0; r < 2; r++) {
+            for (int c = 0; c < 2; c++) {
+                intermediate[newHoleRow + r][newHoleCol + c] = newSquares[oldHoleRow + r][oldHoleCol + c];
+                intermediate[oldHoleRow + r][oldHoleCol + c] = 0;
+            }
+        }
+
+        return intermediate;
     }
 
     void showGameOverDialog(int winner) {
