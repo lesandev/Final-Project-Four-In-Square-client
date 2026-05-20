@@ -34,6 +34,7 @@ public class ApiClient {
                 Log.d(TAG, "POST " + url);
 
                 JSONObject json = buildBoardJson(board);
+                json.put("level", level);
 
                 String response = postJson(url, json);
                 if (response == null) return;

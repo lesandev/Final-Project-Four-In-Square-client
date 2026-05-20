@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1A1A2E"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Four in a Square"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#E94560"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Subtitle -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Game Rules"
+            android:textSize="18sp"
+            android:textColor="#A0A0C0"
+            android:layout_marginBottom="28dp" />
+
+        <!-- Card: Objective -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#16213E"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🎯  Objective"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E94560"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Be the first player to place 4 of your pieces forming a 2×2 square anywhere on the board."
+                android:textSize="14sp"
+                android:textColor="#D0D0E8"
+                android:lineSpacingMultiplier="1.4" />
+        </LinearLayout>
+
+        <!-- Card: Players & Age -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#16213E"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👥  Players &amp; Age"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E94560"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• 2 players: You vs. the Computer\n• Recommended age: 6 – 99"
+                android:textSize="14sp"
+                android:textColor="#D0D0E8"
+                android:lineSpacingMultiplier="1.6" />
+        </LinearLayout>
+
+        <!-- Card: Board -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#16213E"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🗂️  Board Structure"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E94560"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="• 6×6 grid divided into nine 2×2 squares\n• One square is always empty — this is the Hole\n• The Hole can move around the board after each turn"
+                android:textSize="14sp"
+                android:textColor="#D0D0E8"
+                android:lineSpacingMultiplier="1.6" />
+        </LinearLayout>
+
+        <!-- Card: How to Play -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#16213E"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="▶️  How to Play"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E94560"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Each turn has 2 steps:\n\n1. Place a piece on any empty cell outside the Hole.\n\n2. Slide an adjacent square into the Hole — the board shifts and the Hole moves to where that square was.\n\nNote: You cannot slide back the square that was just moved by your opponent."
+                android:textSize="14sp"
+                android:textColor="#D0D0E8"
+                android:lineSpacingMultiplier="1.6" />
+        </LinearLayout>
+
+        <!-- Card: Winning -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#16213E"
+            android:padding="16dp"
+            android:layout_marginBottom="32dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏆  Winning"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#E94560"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="The first player to have 4 pieces occupying a complete 2×2 square on the board wins the game.\n\nThe winning square must not overlap with the Hole."
+                android:textSize="14sp"
+                android:textColor="#D0D0E8"
+                android:lineSpacingMultiplier="1.6" />
+        </LinearLayout>
+
+        <!-- Continue Button -->
+        <Button
+            android:id="@+id/continueButton"
+            android:layout_width="260dp"
+            android:layout_height="56dp"
+            android:text="Let's Play!"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#E94560"
+            android:layout_marginBottom="32dp" />
+
+    </LinearLayout>
+</ScrollView>

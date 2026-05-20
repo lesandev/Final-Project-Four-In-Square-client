@@ -25,6 +25,10 @@
         </activity>
 
         <activity
+            android:name=".RulesActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".LevelSelectActivity"
             android:exported="false" />
 
