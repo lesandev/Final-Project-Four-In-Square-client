@@ -1,6 +1,8 @@
 package co.il.leah.project;
 
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.WindowManager;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -113,12 +115,20 @@ public class GameActivity extends AppCompatActivity {
             message = "It's a Tie!";
         }
 
-        new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("Game Over!")
                 .setMessage(message)
-                .setPositiveButton("Play Again", (dialog, which) -> startGame())
-                .setNegativeButton("Back to Levels", (dialog, which) -> finish())
+                .setPositiveButton("Play Again", (d, which) -> startGame())
+                .setNegativeButton("Back to Levels", (d, which) -> finish())
                 .setCancelable(false)
-                .show();
+                .create();
+
+        dialog.show();
+
+        // הזזת הדיאלוג לחלק העליון של המסך כדי לא להסתיר את הלוח
+        WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        params.gravity = Gravity.TOP | Gravity.CENTER_HORIZONTAL;
+        params.y = 80;
+        dialog.getWindow().setAttributes(params);
     }
 }
